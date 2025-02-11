@@ -16,7 +16,14 @@ Loan reports (A, B, C SQL files)
 
 README.md → Project documentation
 
-📊 Key Analyses
+🏆 My Contributions
+Designed and implemented the SQL database structure for bank loan data analysis.
+Wrote optimized SQL queries to extract insights from loan data.
+Conducted data cleaning and preprocessing before loading the dataset.
+Analyzed loan approval trends, defaulters, and financial risks using SQL.
+Created detailed reports and summaries to visualize key findings.
+
+📊 Key Analysis
 
 Loan approval and rejection trends
 
@@ -42,5 +49,5 @@ Implement visualization tools like Power BI or Tableau.
 
 Optimize SQL queries for performance.
 
-📌 Feel free to contribute or suggest improvements! 😊
+
 
