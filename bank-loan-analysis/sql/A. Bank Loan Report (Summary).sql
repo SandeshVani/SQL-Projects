@@ -112,7 +112,11 @@ AND YEAR(issue_date) = (SELECT MAX(YEAR(issue_date)) FROM loans);
 
 -- Calculating percentage based on only good loan applications
 
-SELECT (COUNT(*) * 100)/(SELECT COUNT(*) FROM loans WHERE loan_status IN ('Fully paid', 'Current')) AS good_loan_percentage
+SELECT (COUNT(*) * 100)/
+		(SELECT COUNT(*) 
+			FROM loans 
+			WHERE loan_status IN ('Fully paid', 'Current')
+	) AS good_loan_percentage
 FROM loans;
 
 -- b). Good Loan Applications
@@ -124,16 +128,16 @@ WHERE loan_status IN ('Fully paid', 'Current');
 -- c). Good Loan Funded Amount
 
 SELECT SUM(CASE 
-				WHEN loan_status IN  ('Fully paid', 'Current') THEN loan_amount 
-			END) AS good_loan_funded_amount
+		WHEN loan_status IN  ('Fully paid', 'Current') THEN loan_amount 
+		END) AS good_loan_funded_amount
 FROM loans;
             
             
 -- d). Good Loan Amount Received
 
 SELECT SUM(CASE 
-				WHEN loan_status IN  ('Fully paid', 'Current') THEN total_payment 
-			END) AS good_loan_received_amount
+		WHEN loan_status IN  ('Fully paid', 'Current') THEN total_payment 
+		END) AS good_loan_received_amount
 FROM loans;
 
 -- 3. BAD LOAN ISSUED
@@ -155,15 +159,15 @@ WHERE loan_status IN ('Charged Off');
 -- c) Bad Loan Funded Amount
 
 SELECT SUM(CASE 
-				WHEN loan_status IN  ('Charged Off') THEN loan_amount 
-			END) AS bad_loan_funded_amount
+		WHEN loan_status IN  ('Charged Off') THEN loan_amount 
+		END) AS bad_loan_funded_amount
 FROM loans;
 
 -- d) Bad Loan Amount Received
 
 SELECT SUM(CASE 
-				WHEN loan_status IN  ('Charged Off') THEN total_payment 
-			END) AS bad_loan_received_amount
+		WHEN loan_status IN  ('Charged Off') THEN total_payment 
+		END) AS bad_loan_received_amount
 FROM loans;
 
 -- 4. LOAN STATUS
@@ -172,11 +176,11 @@ FROM loans;
 
 SELECT 
 	loan_status, 
-    count(*) AS total_loans,
+    	count(*) AS total_loans,
 	SUM(loan_amount) AS total_loan_amount,
-    SUM(total_payment) AS total_payment_recieved,
-    AVG(int_rate) AS avg_interest_rate,
-    AVG(dti) AS average_dti
+	SUM(total_payment) AS total_payment_recieved,
+    	AVG(int_rate) AS avg_interest_rate,
+    	AVG(dti) AS average_dti
 FROM loans
 GROUP BY loan_status
 ORDER BY total_loans DESC;
@@ -187,19 +191,19 @@ SELECT
     loan_status,
     COUNT(*) AS total_loan_applications,  
     SUM(CASE 
-			WHEN MONTH(issue_date) = MONTH(CURDATE()) 
-            AND 
-            YEAR(issue_date) = (SELECT MAX(YEAR(issue_date)) FROM loans) 
-            THEN loan_amount 
-            ELSE 0 
-		END) AS mtd_funded_amount,  
+		WHEN MONTH(issue_date) = MONTH(CURDATE()) 
+            	AND 
+           	 YEAR(issue_date) = (SELECT MAX(YEAR(issue_date)) FROM loans) 
+            	THEN loan_amount 
+            	ELSE 0 
+	END) AS mtd_funded_amount,  
     SUM(CASE 
-			WHEN MONTH(issue_date) = MONTH(CURDATE()) 
-            AND
-            YEAR(issue_date) = (SELECT MAX(YEAR(issue_date)) FROM loans) 
-            THEN total_payment 
-            ELSE 0 
-		END) AS mtd_amount_received, 
+		WHEN MONTH(issue_date) = MONTH(CURDATE()) 
+           	AND
+            	YEAR(issue_date) = (SELECT MAX(YEAR(issue_date)) FROM loans) 
+            	THEN total_payment 
+            	ELSE 0 
+	END) AS mtd_amount_received, 
     AVG(int_rate) AS average_interest_rate,  
     AVG(dti) AS average_dti  
 FROM loans  
