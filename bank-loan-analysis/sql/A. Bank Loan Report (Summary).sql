@@ -166,7 +166,45 @@ SELECT SUM(CASE
 			END) AS bad_loan_received_amount
 FROM loans;
 
+-- 4. LOAN STATUS
 
+-- 1). Complete Loan Status Summary
+
+SELECT 
+	loan_status, 
+    count(*) AS total_loans,
+	SUM(loan_amount) AS total_loan_amount,
+    SUM(total_payment) AS total_payment_recieved,
+    AVG(int_rate) AS avg_interest_rate,
+    AVG(dti) AS average_dti
+FROM loans
+GROUP BY loan_status
+ORDER BY total_loans DESC;
+
+-- 2). MTD Loan Status Summary (Month-to-Date Performance)
+
+SELECT 
+    loan_status,
+    COUNT(*) AS total_loan_applications,  
+    SUM(CASE 
+			WHEN MONTH(issue_date) = MONTH(CURDATE()) 
+            AND 
+            YEAR(issue_date) = (SELECT MAX(YEAR(issue_date)) FROM loans) 
+            THEN loan_amount 
+            ELSE 0 
+		END) AS mtd_funded_amount,  
+    SUM(CASE 
+			WHEN MONTH(issue_date) = MONTH(CURDATE()) 
+            AND
+            YEAR(issue_date) = (SELECT MAX(YEAR(issue_date)) FROM loans) 
+            THEN total_payment 
+            ELSE 0 
+		END) AS mtd_amount_received, 
+    AVG(int_rate) AS average_interest_rate,  
+    AVG(dti) AS average_dti  
+FROM loans  
+GROUP BY loan_status  
+ORDER BY total_loan_applications DESC;
             
 
 
