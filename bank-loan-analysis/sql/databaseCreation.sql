@@ -16,7 +16,7 @@ CREATE TABLE loans (
     last_payment_date DATE,
     loan_status VARCHAR(50),
     next_payment_date DATE,
-	member_id INT,
+    member_id INT,
     purpose VARCHAR(255),
     sub_grade VARCHAR(5),
     term VARCHAR(20),
