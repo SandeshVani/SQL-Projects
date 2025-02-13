@@ -51,10 +51,9 @@ FROM loan_disbursed;
 -- 3. Interest Rate for Various Subgrade and Grade Loan Types
 -- This calculates the average interest rate for each loan grade and subgrade.
 
-SELECT 
+SELECT DISTINCT
 	grade, 
     	sub_grade, 
-    	int_rate,
     	AVG(int_rate) OVER (PARTITION BY grade) AS avg_interest_rate_per_grade, 
     	AVG(int_rate) OVER (PARTITION BY grade, sub_grade) AS avg_interest_rate_per_subgrade
 FROM loans ;
