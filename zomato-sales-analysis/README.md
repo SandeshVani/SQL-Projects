@@ -4,7 +4,8 @@ This project is a SQL-based analysis of a Zomato-style food delivery system. It 
 
 ## 📁 Files Included
 
-- `Zomato_Sales_Analysis_Questions.pdf` – List of analysis questions
+- `Zomato_Sales_Analysis_Project
+- .pdf` – List of analysis questions
 - `Zomato_Solution.sql` – SQL solutions to all 15 tasks
 - `zomatodb.sql` – SQL script to create and populate the database
 - `schema.png` – Visual representation of the database schema
